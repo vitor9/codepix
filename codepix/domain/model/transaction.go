@@ -14,6 +14,12 @@ const (
 	TransactionConfirmed 	string = "confirmed"
 )
 
+type TransactionRepositoryInterface interface {
+	Register(transaction *Transaction) error
+	Save(transaction *Transaction) error
+	Find(id string) (*Transaction, error)
+}
+
 type Transactions struct {
 	Transaction []Transaction
 }
@@ -65,3 +71,26 @@ func NewTransaction(accountFrom *Account, amount float64, pixKeyTo *PixKey, desc
 	}
 	return &transaction, nil
 }
+
+func (transaction *Transaction) Complete() error {
+	transaction.Status = TransactionError
+	transaction.UpdatedAt = time.Now()
+	err := transaction.isValid()
+	return err
+}
+
+func (transaction *Transaction) Confirm() error {
+	transaction.Status = TransactionConfirmed
+	transaction.UpdatedAt = time.Now()
+	err := transaction.isValid()
+	return err
+}
+
+func (transaction *Transaction) Cancel(description string) error {
+	transaction.Status = TransactionError
+	transaction.UpdatedAt = time.Now()
+	transaction.Description = description
+	err := transaction.isValid()
+	return err
+}
+
