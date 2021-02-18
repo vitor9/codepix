@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package github.com.vitor9.codepix;
+
+// vai gerar tipo um namespace pb
+// PB significa protocolbuffers
+option go_package = "protofiles;pb";
+
+// Estamos criando todas estas mensagens pq
+
+
+//O tipo de msg que vamos criar, vai ser o tipo padrao de da mensagem
+// Utilizado para registrar
+message PixKeyRegistration {
+// Estabelecendo "indices" para o grpc. Utilizado internamente
+  string kind = 1;
+  string key = 2;
+  string accountId = 3;
+}
+
+// Pedindo a chave que vamos receber, como p/ex, a kind e o key
+message PixKey {
+  string kind = 1;
+  string key = 2;
+}
+
+message Account {
+  string accountId = 1;
+  string accountNumber = 2;
+  string bankId = 3;
+  string bankName = 4;
+  string OwnerName = 5;
+  string createdAt = 6;
+}
+
+message PixKeyInfo {
+  string kind = 1;
+  string key = 2;
+  string accountId = 3;
+  Account account = 4;
+  string createdAt = 5;
+}
+
+message PixKeyCreatedResult {
+  string kind = 1;
+  string key = 2;
+  string error = 3;
+}
+
+// Vou criar um servico RPC, vai receber um pixKeyRegistration e vai receber o resultado do CreatedResult
+// por que assim vamos ter o ID da chave criada, o status e o erro caso tenhamos tido algum erro
+
+service PixService {
+  rpc RegisterPixKey (PixKeyRegistration) returns (PixKeyCreatedResult) {};
+  rpc Find(PixKey) returns (PixKeyInfo) {};
+}
