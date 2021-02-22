@@ -1,0 +1,9 @@
+primeiramente devemos subir o banco de dados para criar as tabelas.
+
+devemos primeiro acessar o container da nossa aplicação e gerar as tabelas de lá mesmo...
+
+Acessamos o container com o comando:
+docker exec -it codepix_app_1 bash
+
+Executamos a classe main para subir a base de dados e criar as tabelas
+go run cmd/main.go 
