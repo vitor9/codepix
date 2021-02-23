@@ -34,16 +34,17 @@ message Account {
 }
 
 message PixKeyInfo {
-  string kind = 1;
-  string key = 2;
-  string accountId = 3;
-  Account account = 4;
-  string createdAt = 5;
+  string id = 1;
+  string kind = 2;
+  string key = 3;
+  string accountId = 4;
+  Account account = 5;
+  string createdAt = 6;
 }
 
 message PixKeyCreatedResult {
-  string kind = 1;
-  string key = 2;
+  string id = 1;
+  string status = 2;
   string error = 3;
 }
 
